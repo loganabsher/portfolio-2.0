@@ -1,0 +1,27 @@
+{
+  "name": "portfolio-2.0",
+  "version": "1.0.0",
+  "description": "my portfolio",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/loganabsher/portfolio-2.0.git"
+  },
+  "keywords": [
+    "portfolio"
+  ],
+  "author": "Logan Absher",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/loganabsher/portfolio-2.0/issues"
+  },
+  "homepage": "https://github.com/loganabsher/portfolio-2.0#readme",
+  "dependencies": {
+    "express": "^4.15.2",
+    "page": "^1.7.1"
+  }
+}
