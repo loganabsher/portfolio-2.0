@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <title>Portfolio</title>
     <!-- Dependencies -->
-    <link rel="stylesheet" href="vendor/styles/normalize.css">
-    <link rel="stylesheet" href="vendor/styles/default.css">
+    <link rel="stylesheet" href="vendors/styles/normalize.css">
+    <link rel="stylesheet" href="vendors/styles/default.css">
     <!-- CSS -->
     <link rel="stylesheet" href="styles/base.css">
     <link rel="stylesheet" href="styles/font.css">
@@ -13,26 +13,52 @@
     <link rel="stylesheet" href="styles/layout.css">
     <!-- Template -->
     <script id="repo-template" type="text/x-handlebars-template">
-
+      <article id="{{name}}">
+        <h3>{{name}}</h3>
+        <p>Created {{days_ago}} days ago<br>Time Stamp:{{created_at}}</p>
+        <section>
+          <h4>Repository Owner:</h4>
+          <p><a href="{{html_url}}">{{login}}</a></p>
+        </section>
+        <section class="branch">
+          <h4>Branches:</h4>
+        </section>
+        <section>
+          <h4>Stats:</h4>
+          <p>Forks: {{forks}}<br>Watchers: {{watchers}}<br>Size: {{size}}mbs</p>
+        </section>
+      </article>
+      <hr>
     </script>
   </head>
   <body>
     <div id="title">
+      <h1>Logan Absher</h1>
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/repositories">Repositories</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+      </nav>
     </div>
     <div id="home">
+      <h2>welcome</h2>
     </div>
     <div id="repo">
+      <h2>reposetories</h2>
     </div>
     <div id="about">
+      <h2>about</h2>
     </div>
     <footer>
     </footer>
     <!-- Dependencies -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="vendor/scripts/handlebars.js"></script>
-    <script src="vendor/scripts/highlight.pack.js"></script>
-    <script src="vendor/scripts/marked.js"></script>
-    <script src="vendor/scripts/page.js"></script>
+    <script src="vendors/scripts/handlebars.js"></script>
+    <script src="vendors/scripts/highlight.pack.js"></script>
+    <script src="vendors/scripts/marked.js"></script>
+    <script src="vendors/scripts/page.js"></script>
     <!-- Frameworks -->
     <script src="scripts/models/repo.js"></script>
     <!-- Filters/Views -->
