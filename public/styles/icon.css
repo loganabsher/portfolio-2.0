@@ -23,3 +23,12 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.icon-home:before {
+  content: "\e900";
+}
+.icon-file-text:before {
+  content: "\e922";
+}
+.icon-smile:before {
+  content: "\e9e1";
+}

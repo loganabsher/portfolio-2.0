@@ -8,14 +8,14 @@ function Repository(data){
   this.size = data.size;
   this.created_at = data.created_at;
   this.days_ago = data.created_at;
-  this.update_at = data.updataed_at;
+  this.updated_at = data.updated_at;
 };
 
 // variable declarations:
 Repository.all = [];
 Repository.gitHub = 'https://api.github.com/';
 Repository.githubRepo = 'user/repos?type=owner';
-Repository.gitHubToken = 'eb203871b8e045aabe542645589c513cce07a768';
+Repository.gitHubToken = '64937605962fa7475a2ec0bdea9511e1430c3751';
 
 // calculates how long ago the repository was created
 Repository.daysAgo = (created) => parseInt((new Date() - new Date(created))/24/60/60/1000);
@@ -26,25 +26,54 @@ Repository.toHtml = function(){
   Repository.all.forEach((ele) => $('#repo').append(template(ele)));
 }
 
-// checks local storage and sees if the data is up to date, if not a new initRepos call is called and replaces local storage
-Repository.check = function(){
-  if(localStorage.all){
-    $.getJSON({
-      method: 'GET',
-      url: Repository.gitHub + Repository.githubRepo,
-      headers: {
-        Authorization: 'token ' + Repository.gitHubToken
-      }
-    }).then(function(data){
-      console.log(data);
-      Repository.all = JSON.parse(localStorage.all);
-      console.log(Repository.all);
-      data.forEach(function(ele){
-        
-      })
-    });
-  }
+// uses a getJSON call and a access token to get my personal repos from github's api
+Repository.initRepos = function(){
+  $.getJSON({
+    method: 'GET',
+    url: Repository.gitHub + Repository.githubRepo,
+    headers: {
+      Authorization: 'token ' + Repository.gitHubToken
+    }
+  }).then(function(data){
+    data.forEach(function(ele){
+      Repository.all.push(new Repository(ele));
+    })
+    Repository.all.map((ele) => ele.days_ago = Repository.daysAgo(ele.days_ago))
+  }).then(() => localStorage.setItem('all', JSON.stringify(Repository.all))).then(
+  () => Repository.toHtml());
 }();
+
+
+// // checks local storage and sees if the data is up to date, if not a new initRepos call is called and replaces local storage
+// Repository.check = function(){
+//   if(localStorage.all){
+//     $.getJSON({
+//       method: 'GET',
+//       url: Repository.gitHub + Repository.githubRepo,
+//       headers: {
+//         Authorization: 'token ' + Repository.gitHubToken
+//       }
+//     }).then(function(data){
+//       console.log(data);
+//       Repository.all = JSON.parse(localStorage.all);
+//       console.log(Repository.all);
+//       data.forEach(function(ele){
+//         let i = 0;
+//         if(ele.updated_at !== Repository.all[i].updated_at){
+//           console.log('yes');
+//           console.log(ele.updated_at);
+//           console.log(Repository.all[i].updated_at);
+//           localStorage.clear();
+//           Repository.initRepos();
+//         }
+//         i++;
+//       })
+//     });
+//   }
+//   else{
+//     Repository.initRepos();
+//   }
+// }();
 
 // // gets branch data from each repository and adds it to the already existing html
 // Repository.fetchBranches = function(){
@@ -63,22 +92,4 @@ Repository.check = function(){
 //     })
 //   })
 // }
-//
-// // uses a getJSON call and a access token to get my personal repos from github's api
-// Repository.initRepos = function(){
-//   $.getJSON({
-//     method: 'GET',
-//     url: Repository.gitHub + Repository.githubRepo,
-//     headers: {
-//       Authorization: 'token ' + Repository.gitHubToken
-//     }
-//   }).then(function(data){
-//     data.forEach(function(ele){
-//       Repository.all.push(new Repository(ele));
-//     })
-//     Repository.all.map(function(ele){
-//       Repository.daysAgo(ele.created_at);
-//     });
-//   }).then(() => Repository.toHtml());
-// };
 //

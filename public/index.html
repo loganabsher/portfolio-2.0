@@ -13,7 +13,8 @@
     <link rel="stylesheet" href="styles/font.css">
     <link rel="stylesheet" href="styles/icon.css">
     <link rel="stylesheet" href="styles/layout.css">
-    <!-- Template -->
+    <link rel="stylesheet" href="styles/module.css">
+    <!-- Templates -->
     <script id="repo-template" type="text/x-handlebars-template">
       <article id="{{name}}">
         <h3>{{name}}</h3>
@@ -27,7 +28,8 @@
       <hr>
     </script>
     <script id="experience-template" type="text/x-handlebars-template">
-      
+      <h4>{{{title}}}</h4>
+      <ul></ul>
     </script>
   </head>
   <body>
@@ -72,6 +74,7 @@
     <script src="vendors/scripts/page.js"></script>
     <!-- Frameworks -->
     <script src="scripts/models/repo.js"></script>
+    <script src="scripts/models/experience.js"></script>
     <!-- Filters/Views -->
     <script src="scripts/views/repoView.js"></script>
     <!-- Routes -->

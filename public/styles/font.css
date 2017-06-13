@@ -7,3 +7,11 @@ h1, h2{
 .finePrint{
   font-family: 'Open Sans Condensed', sans-serif;
 }
+
+/*------------------------------------*/
+
+#title nav ul li a{
+  color: black;
+  font-size: 1.6em;
+  text-decoration: none;
+}

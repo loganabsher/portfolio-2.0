@@ -1,6 +1,24 @@
-body{
+/*div:child{
   margin-left: 5%;
   margin-right: 5%;
+}*/
+
+/*------------------------------------*/
+
+#title h1{
+  margin-top: 0px;
+}
+#title nav ul{
+  padding: 0px;
+  margin: 0px;
+}
+#title nav ul li{
+  display: inline;
+  list-style-type: none;
+}
+#title nav ul li a{
+  padding-left: 6px;
+  padding-right: 6px;
 }
 
 /*------------------------------------*/
