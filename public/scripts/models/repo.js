@@ -15,7 +15,7 @@ function Repository(data){
 Repository.all = [];
 Repository.gitHub = 'https://api.github.com/';
 Repository.githubRepo = 'user/repos?type=owner';
-Repository.gitHubToken = '64937605962fa7475a2ec0bdea9511e1430c3751';
+Repository.gitHubToken = '2025bb7fa1a4a4b45e566722073de8d0498ede55';
 
 // calculates how long ago the repository was created
 Repository.daysAgo = (created) => parseInt((new Date() - new Date(created))/24/60/60/1000);
@@ -27,7 +27,7 @@ Repository.toHtml = function(){
 }
 
 // uses a getJSON call and a access token to get my personal repos from github's api
-Repository.initRepos = function(){
+Repository.fetchRepos = function(){
   $.getJSON({
     method: 'GET',
     url: Repository.gitHub + Repository.githubRepo,
@@ -38,42 +38,42 @@ Repository.initRepos = function(){
     data.forEach(function(ele){
       Repository.all.push(new Repository(ele));
     })
-    Repository.all.map((ele) => ele.days_ago = Repository.daysAgo(ele.days_ago))
+    Repository.all.map((ele) => ele.days_ago = Repository.daysAgo(ele.days_ago));
   }).then(() => localStorage.setItem('all', JSON.stringify(Repository.all))).then(
   () => Repository.toHtml());
 }();
 
 
-// // checks local storage and sees if the data is up to date, if not a new initRepos call is called and replaces local storage
-// Repository.check = function(){
-//   if(localStorage.all){
-//     $.getJSON({
-//       method: 'GET',
-//       url: Repository.gitHub + Repository.githubRepo,
-//       headers: {
-//         Authorization: 'token ' + Repository.gitHubToken
-//       }
-//     }).then(function(data){
-//       console.log(data);
-//       Repository.all = JSON.parse(localStorage.all);
-//       console.log(Repository.all);
-//       data.forEach(function(ele){
-//         let i = 0;
-//         if(ele.updated_at !== Repository.all[i].updated_at){
-//           console.log('yes');
-//           console.log(ele.updated_at);
-//           console.log(Repository.all[i].updated_at);
-//           localStorage.clear();
-//           Repository.initRepos();
-//         }
-//         i++;
-//       })
-//     });
-//   }
-//   else{
-//     Repository.initRepos();
-//   }
-// }();
+// checks local storage and sees if the data is up to date, if not a new initRepos call is called and replaces local storage
+Repository.check = function(){
+  if(localStorage.all){
+    $.getJSON({
+      method: 'GET',
+      url: Repository.gitHub + Repository.githubRepo,
+      headers: {
+        Authorization: 'token ' + Repository.gitHubToken
+      }
+    }).then(function(data){
+      console.log(data);
+      Repository.all = JSON.parse(localStorage.all);
+      console.log(Repository.all);
+      data.forEach(function(ele){
+        let i = 0;
+        if(ele.updated_at !== Repository.all[i].updated_at){
+          console.log('yes');
+          console.log(ele.updated_at);
+          console.log(Repository.all[i].updated_at);
+          localStorage.clear();
+          Repository.fetchRepos();
+        }
+        i++;
+      });
+    });
+  }
+  else{
+    Repository.fetchRepos();
+  }
+}();
 
 // // gets branch data from each repository and adds it to the already existing html
 // Repository.fetchBranches = function(){
