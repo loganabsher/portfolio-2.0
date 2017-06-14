@@ -11,9 +11,10 @@
     <!-- CSS -->
     <link rel="stylesheet" href="styles/base.css">
     <link rel="stylesheet" href="styles/font.css">
-    <link rel="stylesheet" href="styles/icon.css">
     <link rel="stylesheet" href="styles/layout.css">
+    <link rel="stylesheet" href="styles/icon.css">
     <link rel="stylesheet" href="styles/module.css">
+    <link rel="stylesheet" href="styles/animation.css">
     <!-- Templates -->
     <script id="repo-template" type="text/x-handlebars-template">
       <article id="{{name}}">
@@ -37,9 +38,9 @@
       <h1>Logan Absher</h1>
       <nav>
         <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/repositories">Repositories</a></li>
-          <li><a href="/about">About</a></li>
+          <li><a href="/" class="icon"><span class="icon-home"></span>Home</a></li>
+          <li><a href="/repositories" class="icon"><span class="icon-file-text"></span>Repositories</a></li>
+          <li><a href="/about" class="icon"><span class="icon-smile"></span>About</a></li>
         </ul>
       </nav>
     </div>
@@ -73,6 +74,17 @@
     </div>
     <div id="about">
       <h2>about</h2>
+      <p>Bio holder</p>
+      <p>my social links: <span class="icon-indent-increase"></span></p>
+      <ul>
+        <li><a href="https://github.com/loganabsher/" class="icon"><span class="icon-github"></span>GitHub</a></li>
+        <li><a href="https://gitlab.com/absherlogan" class="icon"><span class="icon-git"></span>GitLab</a></li>
+        <li><a href="" id="email-link" class="icon"><span class="icon-mail2"></span>Email</a></li>
+        <li><a href="" id="phone-link" class="icon"><span class="icon-phone"></span>Phone</a></li>
+        <li><a href="https://www.linkedin.com/in/logan-absher-b0089494/" class="icon"><span class="icon-linkedin"></span>LinkedIn</a></li>
+        <li><a href="" id="play-youtube" class="icon"><span class="icon-youtube"></span>YouTube</a></li>
+      </ul>
+      <span class="icon-copy"></span>
     </div>
     <footer>
     </footer>
