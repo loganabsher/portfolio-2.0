@@ -28,6 +28,7 @@ Repository.toHtml = function(){
 
 // uses a getJSON call and a access token to get my personal repos from github's api
 Repository.fetchRepos = function(){
+  Repository.all = [];
   $.getJSON({
     method: 'GET',
     url: Repository.gitHub + Repository.githubRepo,
@@ -41,7 +42,7 @@ Repository.fetchRepos = function(){
     Repository.all.map((ele) => ele.days_ago = Repository.daysAgo(ele.days_ago));
   }).then(() => localStorage.setItem('all', JSON.stringify(Repository.all))).then(
   () => Repository.toHtml());
-}();
+};
 
 
 // checks local storage and sees if the data is up to date, if not a new initRepos call is called and replaces local storage
@@ -55,6 +56,7 @@ Repository.check = function(){
       }
     }).then(function(data){
       console.log(data);
+      Repository.all = [];
       Repository.all = JSON.parse(localStorage.all);
       console.log(Repository.all);
       data.forEach(function(ele){
@@ -93,3 +95,24 @@ Repository.check = function(){
 //   })
 // }
 //
+
+
+
+
+
+// --Home/Experience Page Function--
+Repository.singleHtml = function(exp){
+  let template = Handlebars.compile($('#experience-template').html());
+  $('#home').append(template(exp));
+}
+
+Repository.fetchData = function(){
+  $.getJSON('data/experienceData.JSON').then(function(rawData){
+    rawData.forEach(function(ele){
+      Repository.singleHtml(ele);
+      ele.list.forEach(function(ele){
+        $.find()
+      });
+    });
+  });
+}();
