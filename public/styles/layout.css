@@ -25,3 +25,7 @@ div{
 }
 
 /*------------------------------------*/
+
+#filters select, #filters section{
+  display: inline;
+}

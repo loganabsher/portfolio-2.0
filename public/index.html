@@ -29,8 +29,8 @@
       <hr>
     </script>
     <script id="experience-template" type="text/x-handlebars-template">
-      <h4>{{{title}}}</h4>
-      <ul></ul>
+      {{{title}}}
+      {{{list}}}
     </script>
   </head>
   <body>
@@ -49,28 +49,16 @@
     </div>
     <div id="repo">
       <h2>reposetories</h2>
-      <ul id="filters">
-        <li>
-          <select id="name-filter">
-            <option value="">-- Filter by Name --</option>
-          </select>
-        </li>
-        <li>
-          <select id="category-filter">
-            <option value="">-- Filter by Categories --</option>
-          </select>
-        </li>
-        <li>
-          <select id="category-filter">
-            <option value="">-- Filter by Categories --</option>
-          </select>
-        </li>
-        <li>
-          <select id="category-filter">
-            <option value="">-- Filter by Categories --</option>
-          </select>
-        </li>
-      </ul>
+      <nav id="filters">
+        <select id="name-filter">
+          <option value="">-- Search by Name --</option>
+        </select>
+        <section>
+          <p><a href="" id="sort-size">Largest MB</a>/<a href="" >Smallest MB</a></p>
+          <p><a href="" id="sort-days">Oldest</a>/<a href="" >Newest</a></p>
+          <p><a href="" id="my-favorites">Favorites</a></p>
+        </section>
+      </nav>
     </div>
     <div id="about">
       <h2>about</h2>
@@ -87,6 +75,7 @@
       <span class="icon-copy"></span>
     </div>
     <footer>
+      <p>@Copywrite 2017</p>
     </footer>
     <!-- Dependencies -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

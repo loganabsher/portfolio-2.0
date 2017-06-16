@@ -40,10 +40,28 @@ Repository.fetchRepos = function(){
       Repository.all.push(new Repository(ele));
     })
     Repository.all.map((ele) => ele.days_ago = Repository.daysAgo(ele.days_ago));
-  }).then(() => localStorage.setItem('all', JSON.stringify(Repository.all))).then(
-  () => Repository.toHtml());
+  }).then(() => Repository.toHtml()).then(
+    () => Repository.fetchBranches()).then(
+    () => localStorage.setItem('all', JSON.stringify(Repository.all)));
 };
 
+// gets branch data from each repository and adds it to the already existing html
+Repository.fetchBranches = function(){
+  Repository.all.forEach(function(ele){
+    $.getJSON({
+      method: 'GET',
+      url: `${Repository.gitHub}repos/loganabsher/${ele.name}/branches`,
+      headers: {
+        Authorization: 'token ' + Repository.gitHubToken
+      }
+    }).then(function(data){
+      let branch = $('#' + ele.name).find('.branch');
+      data.forEach(function(branches){
+        $(branch).append(`<p><a href="${branches.commit.url}">${branches.name}</a></p>`);
+      })
+    })
+  })
+}
 
 // checks local storage and sees if the data is up to date, if not a new initRepos call is called and replaces local storage
 Repository.check = function(){
@@ -77,30 +95,11 @@ Repository.check = function(){
   }
 }();
 
-// // gets branch data from each repository and adds it to the already existing html
-// Repository.fetchBranches = function(){
-//   Repository.all.forEach(function(ele){
-//     $.getJSON({
-//       method: 'GET',
-//       url: `${Repository.gitHub}repos/loganabsher/${ele.name}/branches`,
-//       headers: {
-//         Authorization: 'token ' + Repository.gitHubToken
-//       }
-//     }).then(function(data){
-//       let branch = $('#' + ele.name).find('.branch');
-//       data.forEach(function(branches){
-//         $(branch).append(`<p><a href="${branches.commit.url}">${branches.name}</a></p>`);
-//       })
-//     })
-//   })
-// }
-//
 
 
 
 
-
-// --Home/Experience Page Function--
+// --Home/Experience Page Functions--
 Repository.singleHtml = function(exp){
   let template = Handlebars.compile($('#experience-template').html());
   $('#home').append(template(exp));
@@ -108,11 +107,6 @@ Repository.singleHtml = function(exp){
 
 Repository.fetchData = function(){
   $.getJSON('data/experienceData.JSON').then(function(rawData){
-    rawData.forEach(function(ele){
-      Repository.singleHtml(ele);
-      ele.list.forEach(function(ele){
-        $.find()
-      });
-    });
+    rawData.forEach((ele) => Repository.singleHtml(ele));
   });
 }();
