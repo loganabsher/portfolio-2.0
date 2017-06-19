@@ -9,6 +9,7 @@ function Repository(data){
   this.created_at = data.created_at;
   this.days_ago = data.created_at;
   this.updated_at = data.updated_at;
+  this.branches;
 };
 
 // variable declarations:
@@ -24,7 +25,7 @@ Repository.daysAgo = (created) => parseInt((new Date() - new Date(created))/24/6
 Repository.toHtml = function(){
   let template = Handlebars.compile($('#repo-template').html());
   Repository.all.forEach((ele) => $('#repo').append(template(ele)));
-}
+};
 
 // uses a getJSON call and a access token to get my personal repos from github's api
 Repository.fetchRepos = function(){
@@ -39,29 +40,32 @@ Repository.fetchRepos = function(){
     data.forEach(function(ele){
       Repository.all.push(new Repository(ele));
     })
-    Repository.all.map((ele) => ele.days_ago = Repository.daysAgo(ele.days_ago));
-  }).then(() => Repository.toHtml()).then(
-    () => Repository.fetchBranches()).then(
-    () => localStorage.setItem('all', JSON.stringify(Repository.all)));
+  }).then(() => localStorage.setItem('all', JSON.stringify(Repository.all))).then(
+    () => Repository.all.map((branchEle) => Repository.fetchBranches(branchEle))).then(
+    () => Repository.all.map((daysEle) => daysEle.days_ago = Repository.daysAgo(daysEle.days_ago))).then(
+    () => setTimeout(() => Repository.toHtml(), 2000));
 };
 
 // gets branch data from each repository and adds it to the already existing html
-Repository.fetchBranches = function(){
-  Repository.all.forEach(function(ele){
-    $.getJSON({
-      method: 'GET',
-      url: `${Repository.gitHub}repos/loganabsher/${ele.name}/branches`,
-      headers: {
-        Authorization: 'token ' + Repository.gitHubToken
-      }
-    }).then(function(data){
-      let branch = $('#' + ele.name).find('.branch');
-      data.forEach(function(branches){
-        $(branch).append(`<p><a href="${branches.commit.url}">${branches.name}</a></p>`);
-      })
-    })
-  })
-}
+Repository.fetchBranches = function(ele){
+  let tempBranch = '';
+  $.getJSON({
+    method: 'GET',
+    url: `${Repository.gitHub}repos/loganabsher/${ele.name}/branches`,
+    headers: {
+      Authorization: 'token ' + Repository.gitHubToken
+    }
+  }).then(function(data){
+    data.forEach(function(branch){
+      let name = `<p><a href="${branch.commit.url}">${branch.name}</a></p>`;
+      name = name.replace('api.', '');
+      name = name.replace('repos/', '');
+      tempBranch = tempBranch + name;
+    });
+    console.log(tempBranch);
+    ele.branches = tempBranch
+  });
+};
 
 // checks local storage and sees if the data is up to date, if not a new initRepos call is called and replaces local storage
 Repository.check = function(){
@@ -73,16 +77,11 @@ Repository.check = function(){
         Authorization: 'token ' + Repository.gitHubToken
       }
     }).then(function(data){
-      console.log(data);
       Repository.all = [];
       Repository.all = JSON.parse(localStorage.all);
-      console.log(Repository.all);
       data.forEach(function(ele){
         let i = 0;
         if(ele.updated_at !== Repository.all[i].updated_at){
-          console.log('yes');
-          console.log(ele.updated_at);
-          console.log(Repository.all[i].updated_at);
           localStorage.clear();
           Repository.fetchRepos();
         }

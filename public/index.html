@@ -20,9 +20,8 @@
       <article id="{{name}}">
         <h3>{{name}}</h3>
         <p>Created {{days_ago}} days ago<br>Time Stamp:{{created_at}}</p>
-        <section class="branch">
-          <h4>Branches:</h4>
-        </section>
+        <h4>Branches:</h4>
+        {{{branches}}}
         <h4>Stats:</h4>
         <p>Forks: {{forks}}<br>Watchers: {{watchers}}<br>Size: {{size}}mbs</p>
       </article>
@@ -36,11 +35,12 @@
   <body>
     <div id="title">
       <h1>Logan Absher</h1>
-      <nav>
+      <span class="icon-list2"></span>
+      <nav id="navigation">
         <ul>
-          <li><a href="/" class="icon"><span class="icon-home"></span>Home</a></li>
-          <li><a href="/repositories" class="icon"><span class="icon-file-text"></span>Repositories</a></li>
-          <li><a href="/about" class="icon"><span class="icon-smile"></span>About</a></li>
+          <li><a href="/"><span class="icon-home"></span>Home</a></li>
+          <li><a href="/repositories"><span class="icon-file-text"></span>Repositories</a></li>
+          <li><a href="/about"><span class="icon-smile"></span>About</a></li>
         </ul>
       </nav>
     </div>
@@ -54,8 +54,8 @@
           <option value="">-- Search by Name --</option>
         </select>
         <section>
-          <p><a href="" id="sort-size">Largest MB</a>/<a href="" >Smallest MB</a></p>
-          <p><a href="" id="sort-days">Oldest</a>/<a href="" >Newest</a></p>
+          <p><a href="" id="sort-largest">Largest MB</a>/<a href="" id="sort-smallest">Smallest MB</a></p>
+          <p><a href="" id="sort-oldest">Oldest</a>/<a href="" id="sort-newest">Newest</a></p>
           <p><a href="" id="my-favorites">Favorites</a></p>
         </section>
       </nav>

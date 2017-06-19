@@ -1,1 +1,22 @@
+#navigation{
+  display: none;
+}
+.icon-list2:hover ~ #navigation{
+  display: block;
+}
+#navigation:hover{
+  display: block;
+}
+.icon-list2{
+  padding-left: 30px;
+  padding-bottom: 40px;
+}
 
+@media screen and (min-width: 450px){
+  #navigation{
+    display: block;
+  }
+  .icon-list2{
+    display: none;
+  }
+}
