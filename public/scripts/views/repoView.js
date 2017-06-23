@@ -9,7 +9,6 @@
   // --Repository Page Functions--
   repoView.populateFilter = function(){
     $('article').each(function(){
-      // if(!$(this).hasClass(''))
       let tag = `<option> value="${$(this).attr()}"</option>`;
       console.log(tag);
       $('#name-filter').append(tag);

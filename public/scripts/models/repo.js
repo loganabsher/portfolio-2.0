@@ -9,7 +9,7 @@ function Repository(data){
   this.created_at = data.created_at;
   this.days_ago = data.created_at;
   this.updated_at = data.updated_at;
-  this.branches;
+  this.branches = '';
 };
 
 // variable declarations:
@@ -28,6 +28,7 @@ Repository.toHtml = function(){
 };
 
 // uses a getJSON call and a access token to get my personal repos from github's api
+// NOTE: instead of doing a fetchrepo and a fetchbranch multiple times loading each page, would it be better to actually host a database containing all information from the getJSON call and then adding the branch information as well, but only as a inital setup, from there it can have a server side checker to make sure the information is up to date.
 Repository.fetchRepos = function(){
   Repository.all = [];
   $.getJSON({
@@ -40,15 +41,14 @@ Repository.fetchRepos = function(){
     data.forEach(function(ele){
       Repository.all.push(new Repository(ele));
     })
-  }).then(() => localStorage.setItem('all', JSON.stringify(Repository.all))).then(
-    () => Repository.all.map((branchEle) => Repository.fetchBranches(branchEle))).then(
+  }).then(() => Repository.all.map((branchEle) => Repository.fetchBranches(branchEle))).then(
     () => Repository.all.map((daysEle) => daysEle.days_ago = Repository.daysAgo(daysEle.days_ago))).then(
-    () => setTimeout(() => Repository.toHtml(), 2000));
+    () => setTimeout(() => Repository.toHtml(), 2000)).then(
+    () => localStorage.setItem('all', JSON.stringify(Repository.all)));
 };
 
 // gets branch data from each repository and adds it to the already existing html
 Repository.fetchBranches = function(ele){
-  let tempBranch = '';
   $.getJSON({
     method: 'GET',
     url: `${Repository.gitHub}repos/loganabsher/${ele.name}/branches`,
@@ -60,10 +60,8 @@ Repository.fetchBranches = function(ele){
       let name = `<p><a href="${branch.commit.url}">${branch.name}</a></p>`;
       name = name.replace('api.', '');
       name = name.replace('repos/', '');
-      tempBranch = tempBranch + name;
+      ele.branches = ele.branches + name;
     });
-    console.log(tempBranch);
-    ele.branches = tempBranch
   });
 };
 

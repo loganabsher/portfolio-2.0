@@ -27,10 +27,7 @@
       </article>
       <hr>
     </script>
-    <script id="experience-template" type="text/x-handlebars-template">
-      {{{title}}}
-      {{{list}}}
-    </script>
+    <script id="experience-template" type="text/x-handlebars-template">{{{title}}}{{{list}}}</script>
   </head>
   <body>
     <div id="title">
@@ -49,7 +46,9 @@
     </div>
     <div id="repo">
       <h2>reposetories</h2>
+      <hr>
       <nav id="filters">
+        <h3>sort by:</h3>
         <select id="name-filter">
           <option value="">-- Search by Name --</option>
         </select>
@@ -59,6 +58,7 @@
           <p><a href="" id="my-favorites">Favorites</a></p>
         </section>
       </nav>
+      <hr>
     </div>
     <div id="about">
       <h2>about</h2>
